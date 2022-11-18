@@ -2,7 +2,9 @@ package com.rihardsedmundscerps.abilitypay.mappers;
 
 import com.rihardsedmundscerps.abilitypay.items.TransactionItem;
 import com.rihardsedmundscerps.abilitypay.models.Transaction;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TransactionMapper {
 
     public TransactionItem toTransactionItem(Transaction transaction) {

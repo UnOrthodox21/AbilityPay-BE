@@ -2,7 +2,9 @@ package com.rihardsedmundscerps.abilitypay.mappers;
 
 import com.rihardsedmundscerps.abilitypay.items.BankAccountItem;
 import com.rihardsedmundscerps.abilitypay.models.BankAccount;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BankAccountMapper {
 
     public BankAccountItem toBankAccountItem(BankAccount bankAccount) {
