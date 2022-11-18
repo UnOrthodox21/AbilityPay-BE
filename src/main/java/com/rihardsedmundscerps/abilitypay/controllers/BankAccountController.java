@@ -2,9 +2,17 @@ package com.rihardsedmundscerps.abilitypay.controllers;
 
 import com.rihardsedmundscerps.abilitypay.items.BankAccountItem;
 import com.rihardsedmundscerps.abilitypay.services.BankAccountService;
+import com.rihardsedmundscerps.abilitypay.services.MyUserDetailsService;
 import com.rihardsedmundscerps.abilitypay.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,14 +21,26 @@ import java.util.Optional;
 @RequestMapping("/api/bank-accounts")
 public class BankAccountController {
 
-    private BankAccountService bankAccountService;
-    private TransactionService transactionService;
+    private final BankAccountService bankAccountService;
+    private final TransactionService transactionService;
+    private final MyUserDetailsService myUserDetailsService;
 
     @Autowired
-    public BankAccountController(BankAccountService bankAccountService, TransactionService transactionService) {
+    public BankAccountController(BankAccountService bankAccountService, TransactionService transactionService, MyUserDetailsService myUserDetailsService) {
         this.bankAccountService = bankAccountService;
         this.transactionService = transactionService;
+        this.myUserDetailsService = myUserDetailsService;
     }
+
+
+    @GetMapping("/getAllAccounts/{password}")
+    public List<BankAccountItem> getAllBankAccounts(@PathVariable("password") String password) {
+        if (myUserDetailsService.checkAdminPassword(password)) {
+            return bankAccountService.getAllBankAccounts();
+        }
+        return null;
+    }
+
 
     @GetMapping("/{accountNumber}")
     public Optional<BankAccountItem> getBankAccountByAccountNumber(@PathVariable("accountNumber") String accountNumber){
@@ -39,7 +59,7 @@ public class BankAccountController {
 
     @PostMapping("/createForUser/{userId}")
     public void createNewBankAccountForUser(@PathVariable("userId") Long userId) {
-        String newAccountNumber = "RKBNK" + Math.round(Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000);
+        String newAccountNumber = "ABLTY" + Math.round(Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000);
         BankAccountItem newBankAccountItem = new BankAccountItem.Builder().number(newAccountNumber).type("Secondary").balance(0).userId(userId).build();
         bankAccountService.addNewBankAccount(newBankAccountItem);
     }
