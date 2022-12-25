@@ -78,9 +78,11 @@ public class MyUserDetailsService implements UserDetailsService {
         userDetailsRepository.delete(userDetailsItemToDelete);
     }
 
-    public void addNewUserDetails(UserDetailsItem userDetailsItem) {
+    public UserDetailsItem addNewUserDetails(UserDetailsItem userDetailsItem) {
         UserDetails userDetailsToSave = userDetailsMapper.toUserDetails(userDetailsItem);
-        userDetailsRepository.save(userDetailsToSave);
+        UserDetails savedUserDetails = userDetailsRepository.save(userDetailsToSave);
+        UserDetailsItem userDetailsItemToReturn = userDetailsMapper.toUserDetailsItem(savedUserDetails);
+        return userDetailsItemToReturn;
     }
 
     public void changeUserDetailsData(UserDetailsItem userDetailsItem, String username){

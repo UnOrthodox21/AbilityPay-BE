@@ -88,9 +88,9 @@ public class UserDetailsController {
 
     @PostMapping(path = "/register")
     public void registerNewUser(@RequestBody UserDetailsItem userDetailsItem) {
-        userDetailsService.addNewUserDetails(userDetailsItem);
-        String newAccountNumber = "ABLTY" + Math.round(Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000);
-        BankAccountItem newBankAccountItem = new BankAccountItem.Builder().number(newAccountNumber).type("Primary").userId(userDetailsItem.getId()).build();
+        UserDetailsItem registerUserDetailsItem = userDetailsService.addNewUserDetails(userDetailsItem);
+        String newAccountNumber = "ABLTY" + Math.round(Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000);
+        BankAccountItem newBankAccountItem = new BankAccountItem.Builder().number(newAccountNumber).type("Primary").userId(registerUserDetailsItem.getId()).build();
         bankAccountService.addNewBankAccount(newBankAccountItem);
     }
 
