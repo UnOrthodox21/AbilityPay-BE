@@ -1,6 +1,7 @@
 package com.rihardsedmundscerps.abilitypay.controllers;
 
 import com.rihardsedmundscerps.abilitypay.items.BankAccountItem;
+import com.rihardsedmundscerps.abilitypay.models.TransferFromTo;
 import com.rihardsedmundscerps.abilitypay.services.BankAccountService;
 import com.rihardsedmundscerps.abilitypay.services.MyUserDetailsService;
 import com.rihardsedmundscerps.abilitypay.services.TransactionService;
@@ -77,7 +78,7 @@ public class BankAccountController {
     }
 
     @PutMapping("/transfer")
-    public boolean sendFunds(@RequestBody TransactionService.TransferFromTo transferFromTo) {
+    public boolean sendFunds(@RequestBody TransferFromTo transferFromTo) {
         boolean success = bankAccountService.sendFunds(transferFromTo);
         if(success){
             transactionService.addNewTransferTransaction(transferFromTo);
@@ -89,7 +90,7 @@ public class BankAccountController {
     }
 
     @PutMapping("/deposit")
-    public void depositFunds(@RequestBody TransactionService.TransferFromTo transferFromTo){
+    public void depositFunds(@RequestBody TransferFromTo transferFromTo){
         boolean success = bankAccountService.depositFunds(transferFromTo);
         if(success){
             transactionService.addNewDepositTransaction(transferFromTo);
@@ -100,7 +101,7 @@ public class BankAccountController {
     }
 
     @PutMapping("/withdraw")
-    public void withdrawFunds(@RequestBody TransactionService.TransferFromTo transferFromTo){
+    public void withdrawFunds(@RequestBody TransferFromTo transferFromTo){
         boolean success = bankAccountService.withdrawFunds(transferFromTo);
         if(success){
             transactionService.addNewWithdrawTransaction(transferFromTo);

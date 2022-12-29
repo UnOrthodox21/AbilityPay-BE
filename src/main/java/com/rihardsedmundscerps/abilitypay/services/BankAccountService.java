@@ -3,6 +3,7 @@ package com.rihardsedmundscerps.abilitypay.services;
 import com.rihardsedmundscerps.abilitypay.items.BankAccountItem;
 import com.rihardsedmundscerps.abilitypay.mappers.BankAccountMapper;
 import com.rihardsedmundscerps.abilitypay.models.BankAccount;
+import com.rihardsedmundscerps.abilitypay.models.TransferFromTo;
 import com.rihardsedmundscerps.abilitypay.repositories.BankAccountRepository;
 import org.springframework.stereotype.Service;
 
@@ -75,20 +76,20 @@ public class BankAccountService {
         return foundBankAccountItems;
     }
 
-    public boolean sendFunds(TransactionService.TransferFromTo transferFromTo) {
+    public boolean sendFunds(TransferFromTo transferFromTo) {
         List<BankAccountItem> bankAccountItemList = getAllBankAccounts();
 
-        String nameFrom = transferFromTo.getAccountNumberFrom();
-        String nameTo = transferFromTo.getAccountNumberTo();
+        String numberFrom = transferFromTo.getAccountNumberFrom();
+        String numberTo = transferFromTo.getAccountNumberTo();
         BankAccount bankAccountFrom = null;
         BankAccount bankAccountTo = null;
 
         for (int i = 0; i < bankAccountItemList.size(); i++) {
-            if (bankAccountItemList.get(i).getNumber().equals(nameFrom)) {
+            if (bankAccountItemList.get(i).getNumber().equals(numberFrom)) {
                 bankAccountFrom = bankAccountMapper.toBankAccount(bankAccountItemList.get(i));
 
             }
-            if (bankAccountItemList.get(i).getNumber().equals(nameTo)) {
+            if (bankAccountItemList.get(i).getNumber().equals(numberTo)) {
                 bankAccountTo = bankAccountMapper.toBankAccount(bankAccountItemList.get(i));
             }
         }
@@ -105,7 +106,7 @@ public class BankAccountService {
         }
     }
 
-    public boolean withdrawFunds(TransactionService.TransferFromTo transferFromTo){
+    public boolean withdrawFunds(TransferFromTo transferFromTo){
         List<BankAccountItem> bankAccountItemList = getAllBankAccounts();
 
         String nameFrom = transferFromTo.getAccountNumberFrom();
@@ -129,7 +130,7 @@ public class BankAccountService {
 
     }
 
-    public boolean depositFunds(TransactionService.TransferFromTo transferFromTo) {
+    public boolean depositFunds(TransferFromTo transferFromTo) {
         List<BankAccountItem> bankAccountItemList = getAllBankAccounts();
 
         String nameFrom = "BANK1337";
