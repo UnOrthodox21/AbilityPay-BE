@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/abilitypay-0.0.1-SNAPSHOT.jar
+web: java -cp -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/abilitypay-0.0.1-SNAPSHOT.jar com.rihardsedmundscerps.abilitypay.AbilityPayApplication
