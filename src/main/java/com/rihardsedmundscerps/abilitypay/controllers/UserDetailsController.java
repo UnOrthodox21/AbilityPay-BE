@@ -91,7 +91,7 @@ public class UserDetailsController {
     public void registerNewUser(@RequestBody UserDetailsItem userDetailsItem) {
         UserDetailsItem registerUserDetailsItem = userDetailsService.addNewUserDetails(userDetailsItem);
         String newAccountNumber = "ABLTY" + Math.round(Math.floor(Math.random() * (99999999 - 10000000 + 1)) + 10000000);
-        BankAccountItem newBankAccountItem = new BankAccountItem.Builder().number(newAccountNumber).type("Primary").userId(registerUserDetailsItem.getId()).build();
+        BankAccountItem newBankAccountItem = new BankAccountItem.Builder().balance(100.00).number(newAccountNumber).type("Primary").userId(registerUserDetailsItem.getId()).build();
         bankAccountService.addNewBankAccount(newBankAccountItem);
     }
 
