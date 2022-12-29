@@ -25,7 +25,14 @@ dependencies {
 jar {
 	enabled = true
 	archiveClassifier.set("")
+
+	manifest {
+		attributes(
+				'Main-Class': 'com.rihardsedmundscerps.abilitypay.AbilityPayApplication'
+		)
+	}
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()
